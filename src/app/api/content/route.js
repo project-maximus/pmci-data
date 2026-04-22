@@ -9,7 +9,7 @@ import {
   isGoogleDriveUrl,
 } from "@/lib/validate";
 
-const HIDDEN_SECTION_TITLES = ["Admin and Back-End Structure", "Member Account Area"];
+const HIDDEN_SECTION_TITLES = ["Admin & Operations Hub"];
 
 export async function GET(request) {
   const session = requireSessionUser(request);
@@ -48,7 +48,7 @@ export async function GET(request) {
         LEFT JOIN content_subsections ss ON ss.section_id = s.id
         LEFT JOIN content_resources r ON r.subsection_id = ss.id
         WHERE s.id = ${Number(sectionFilter)}
-          AND s.title NOT IN (${HIDDEN_SECTION_TITLES[0]}, ${HIDDEN_SECTION_TITLES[1]})
+          AND s.title NOT IN (${HIDDEN_SECTION_TITLES[0]})
         ORDER BY s.sort_order, ss.sort_order, r.updated_at DESC
       `;
     } else {
@@ -74,7 +74,7 @@ export async function GET(request) {
         FROM content_sections s
         LEFT JOIN content_subsections ss ON ss.section_id = s.id
         LEFT JOIN content_resources r ON r.subsection_id = ss.id
-        WHERE s.title NOT IN (${HIDDEN_SECTION_TITLES[0]}, ${HIDDEN_SECTION_TITLES[1]})
+        WHERE s.title NOT IN (${HIDDEN_SECTION_TITLES[0]})
         ORDER BY s.sort_order, ss.sort_order, r.updated_at DESC
       `;
     }

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════
-   NutriPath — Dark Premium Design System
+   PMCI — Healthcare Training Platform
    ═══════════════════════════════════════════ */
 
 :root {
@@ -17,7 +17,7 @@
   --border-subtle: rgba(0, 0, 0, 0.05);
   --border-default: rgba(0, 0, 0, 0.1);
   --border-strong: rgba(0, 0, 0, 0.15);
-  --border-glow: rgba(139, 92, 246, 0.3);
+  --border-glow: rgba(37, 99, 235, 0.3);
 
   /* ── Text ── */
   --text-primary: #111827;
@@ -26,13 +26,13 @@
   --text-inverse: #ffffff;
 
   /* ── Accent: Electric Violet/Indigo ── */
-  --accent-50: #f5f3ff;
-  --accent-100: #ede9fe;
-  --accent-200: #ddd6fe;
-  --accent-400: #a78bfa;
-  --accent-500: #8b5cf6;
-  --accent-600: #7c3aed;
-  --accent-glow: rgba(139, 92, 246, 0.4);
+  --accent-50: #eff6ff;
+  --accent-100: #dbeafe;
+  --accent-200: #bfdbfe;
+  --accent-400: #93c5fd;
+  --accent-500: #2563eb;
+  --accent-600: #1d4ed8;
+  --accent-glow: rgba(37, 99, 235, 0.4);
 
   /* ── Accent 2: Electric Blue ── */
   --blue-400: #60a5fa;
@@ -101,7 +101,7 @@
   --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.10);
   --shadow-lg: 0 14px 36px rgba(15, 23, 42, 0.12);
   --shadow-xl: 0 24px 60px rgba(15, 23, 42, 0.16);
-  --glow-accent: 0 0 14px rgba(139, 92, 246, 0.18);
+  --glow-accent: 0 0 14px rgba(37, 99, 235, 0.18);
   --glow-green: 0 0 10px rgba(16, 185, 129, 0.2);
 }
 
@@ -118,7 +118,7 @@
   --border-subtle: rgba(255, 255, 255, 0.06);
   --border-default: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.12);
-  --border-glow: rgba(139, 92, 246, 0.3);
+  --border-glow: rgba(37, 99, 235, 0.3);
 
   /* ── Text ── */
   --text-primary: #f0f0f5;
@@ -127,13 +127,13 @@
   --text-inverse: #06080f;
 
   /* ── Accent: Electric Violet/Indigo ── */
-  --accent-50: rgba(139, 92, 246, 0.06);
-  --accent-100: rgba(139, 92, 246, 0.12);
-  --accent-200: rgba(139, 92, 246, 0.2);
-  --accent-400: #a78bfa;
-  --accent-500: #8b5cf6;
-  --accent-600: #7c3aed;
-  --accent-glow: rgba(139, 92, 246, 0.4);
+  --accent-50: rgba(37, 99, 235, 0.06);
+  --accent-100: rgba(37, 99, 235, 0.12);
+  --accent-200: rgba(37, 99, 235, 0.2);
+  --accent-400: #93c5fd;
+  --accent-500: #2563eb;
+  --accent-600: #1d4ed8;
+  --accent-glow: rgba(37, 99, 235, 0.4);
 
   /* ── Accent 2: Electric Blue ── */
   --blue-400: #60a5fa;
@@ -311,7 +311,7 @@ body {
 
 @keyframes glow-pulse {
   0%, 100% { box-shadow: 0 0 8px var(--accent-glow); }
-  50% { box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(139, 92, 246, 0.15); }
+  50% { box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(37, 99, 235, 0.15); }
 }
 
 .animate-fadeIn { animation: fadeIn var(--dur-normal) var(--ease-out-expo) both; }
@@ -373,7 +373,7 @@ body {
 .login-hero-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.15), transparent 50%),
+  background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.15), transparent 50%),
               radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.15), transparent 50%);
 }
 
@@ -791,7 +791,7 @@ body {
   right: 0;
   width: 50%;
   height: 40%;
-  background: radial-gradient(ellipse at 80% 0%, rgba(139, 92, 246, 0.04) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 80% 0%, rgba(37, 99, 235, 0.04) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
 }
@@ -936,7 +936,7 @@ body {
 .badge-type {
   color: var(--accent-400);
   background: var(--accent-50);
-  border: 1px solid rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.15);
 }
 
 .badge-source {
@@ -1326,8 +1326,8 @@ body {
   gap: 12px;
   padding: 14px 16px;
   border-radius: var(--radius-md);
-  background: rgba(139, 92, 246, 0.06);
-  border: 1px solid rgba(139, 92, 246, 0.12);
+  background: rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.12);
   margin-bottom: 24px;
 }
 
@@ -1407,7 +1407,7 @@ body {
 [data-theme='light'] .select:focus,
 [data-theme='light'] .textarea:focus {
   background: var(--bg-surface);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.14);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
 }
 
 [data-theme='light'] .card,
@@ -1433,6 +1433,63 @@ body {
   background: var(--bg-raised);
   border-color: var(--border-default);
 }
+
+/* ═══════════════════════════════════════════
+   INLINE TITLE EDITING
+   ═══════════════════════════════════════════ */
+.sb-section-row .sb-pencil { opacity: 0; transition: opacity var(--dur-fast) ease; }
+.sb-section-row:hover .sb-pencil { opacity: 1; }
+
+.sub-pencil { opacity: 0; transition: opacity var(--dur-fast) ease; }
+.sub-header:hover .sub-pencil { opacity: 1; }
+
+.title-input {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--accent-400);
+  border-radius: var(--radius-sm);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-50);
+  min-width: 0;
+}
+
+.title-save-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-500);
+  color: white;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--dur-fast) ease;
+}
+.title-save-btn:hover:not(:disabled) { background: var(--accent-600); }
+.title-save-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.title-cancel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--dur-fast) ease;
+}
+.title-cancel-btn:hover { color: var(--text-primary); border-color: var(--border-strong); }
 
 /* ═══════════════════════════════════════════
    RESPONSIVE

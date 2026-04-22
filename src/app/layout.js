@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "NutriPath — CDRE Content Hub",
-  description: "Manage and organize CDRE exam preparation content for the NutriPath platform.",
+  title: "PMCI — Training Content Hub",
+  description: "Manage and organize healthcare training content for Performance Masters Career Institute.",
 };
 
 export default function RootLayout({ children }) {

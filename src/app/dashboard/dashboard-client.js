@@ -49,6 +49,21 @@ const I = {
       <rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5.5 5.5H10.5"/><path d="M5.5 8H10.5"/><path d="M5.5 10.5H8"/>
     </svg>
   ),
+  Pencil: () => (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M11 2L14 5L5 14H2V11L11 2Z"/><path d="M9 4L12 7"/>
+    </svg>
+  ),
+  Check: () => (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 8L6.5 12L13 4"/>
+    </svg>
+  ),
+  X: () => (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 4L12 12M12 4L4 12"/>
+    </svg>
+  ),
 };
 
 const RESOURCE_LABELS = {
@@ -87,6 +102,7 @@ function DashboardInner({ username, role }) {
   const [editing, setEditing] = useState({});
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [titleEdit, setTitleEdit] = useState({});
 
   useEffect(() => {
     loadData();
@@ -196,6 +212,36 @@ function DashboardInner({ username, role }) {
     } catch { toast.error("Could not delete resource."); }
   }
 
+  function startTitleEdit(key, current) {
+    setTitleEdit((p) => ({ ...p, [key]: { value: current, saving: false } }));
+  }
+
+  function cancelTitleEdit(key) {
+    setTitleEdit((p) => { const n = { ...p }; delete n[key]; return n; });
+  }
+
+  async function saveTitleEdit(key, type, id) {
+    const te = titleEdit[key];
+    if (!te || !te.value.trim()) return;
+    setTitleEdit((p) => ({ ...p, [key]: { ...p[key], saving: true } }));
+    try {
+      const endpoint = type === "section"
+        ? `/api/content/sections/${id}`
+        : `/api/content/subsections/${id}`;
+      const res = await fetch(endpoint, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: te.value.trim() }),
+      });
+      const data = await res.json();
+      if (!res.ok) { toast.error(data.error || "Could not save title."); return; }
+      cancelTitleEdit(key);
+      toast.success("Title updated.");
+      await loadData();
+    } catch { toast.error("Could not save title."); }
+    finally { setTitleEdit((p) => p[key] ? { ...p, [key]: { ...p[key], saving: false } } : p); }
+  }
+
   async function signOut() {
     await fetch("/api/auth/signout", { method: "POST" });
     router.push("/"); router.refresh();
@@ -212,7 +258,7 @@ function DashboardInner({ username, role }) {
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sb-brand">
           <div className="sb-brand-icon"><I.Layers /></div>
-          <div className="sb-brand-text"><h1>NutriPath</h1><p>Content Hub</p></div>
+          <div className="sb-brand-text"><h1>PMCI</h1><p>Training Hub</p></div>
         </div>
 
         <nav className="sb-nav">
@@ -220,13 +266,45 @@ function DashboardInner({ username, role }) {
           <div className="stagger">
             {sections.map((section) => {
               const count = section.subsections?.reduce((a, s) => a + (s.resources?.length || 0), 0);
+              const key = `s-${section.id}`;
+              const te = titleEdit[key];
+              if (te !== undefined) {
+                return (
+                  <div key={section.id} style={{ display: "flex", alignItems: "center", gap: 4, padding: "4px 8px" }}>
+                    <input
+                      autoFocus
+                      className="title-input"
+                      style={{ fontSize: 13 }}
+                      value={te.value}
+                      disabled={te.saving}
+                      onChange={(e) => setTitleEdit((p) => ({ ...p, [key]: { ...p[key], value: e.target.value } }))}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") saveTitleEdit(key, "section", section.id);
+                        if (e.key === "Escape") cancelTitleEdit(key);
+                      }}
+                    />
+                    <button className="title-save-btn" disabled={te.saving} onClick={() => saveTitleEdit(key, "section", section.id)} title="Save"><I.Check /></button>
+                    <button className="title-cancel-btn" onClick={() => cancelTitleEdit(key)} title="Cancel"><I.X /></button>
+                  </div>
+                );
+              }
               return (
-                <button key={section.id} onClick={() => { setActiveSectionId(section.id); setSidebarOpen(false); }}
-                  className={`sb-item ${activeSectionId === section.id ? "active" : ""}`}>
-                  <span className="sb-item-icon"><I.Doc /></span>
-                  <span className="sb-item-label">{section.title}</span>
-                  {count > 0 && <span className="sb-item-count">{count}</span>}
-                </button>
+                <div key={section.id} className="sb-section-row" style={{ display: "flex", alignItems: "center" }}>
+                  <button onClick={() => { setActiveSectionId(section.id); setSidebarOpen(false); }}
+                    className={`sb-item ${activeSectionId === section.id ? "active" : ""}`}
+                    style={{ flex: 1, minWidth: 0 }}>
+                    <span className="sb-item-icon"><I.Doc /></span>
+                    <span className="sb-item-label">{section.title}</span>
+                    {count > 0 && <span className="sb-item-count">{count}</span>}
+                  </button>
+                  <button
+                    className="btn btn-ghost btn-icon btn-xs sb-pencil"
+                    title="Rename section"
+                    onClick={(e) => { e.stopPropagation(); startTitleEdit(key, section.title); }}
+                    style={{ flexShrink: 0, width: 24, height: 24, marginRight: 4 }}>
+                    <I.Pencil />
+                  </button>
+                </div>
               );
             })}
           </div>
@@ -290,9 +368,39 @@ function DashboardInner({ username, role }) {
               return (
                 <div key={sub.id} className="sub-card">
                   <div className="sub-header">
-                    <h3 className="sub-title">{sub.title}</h3>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, flex: 1, minWidth: 0 }}>
+                      {titleEdit[`ss-${sub.id}`] !== undefined ? (
+                        <>
+                          <input
+                            autoFocus
+                            className="title-input"
+                            style={{ fontSize: 14, fontWeight: 600 }}
+                            value={titleEdit[`ss-${sub.id}`].value}
+                            disabled={titleEdit[`ss-${sub.id}`].saving}
+                            onChange={(e) => setTitleEdit((p) => ({ ...p, [`ss-${sub.id}`]: { ...p[`ss-${sub.id}`], value: e.target.value } }))}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") saveTitleEdit(`ss-${sub.id}`, "subsection", sub.id);
+                              if (e.key === "Escape") cancelTitleEdit(`ss-${sub.id}`);
+                            }}
+                          />
+                          <button className="title-save-btn" disabled={titleEdit[`ss-${sub.id}`].saving} onClick={() => saveTitleEdit(`ss-${sub.id}`, "subsection", sub.id)} title="Save"><I.Check /></button>
+                          <button className="title-cancel-btn" onClick={() => cancelTitleEdit(`ss-${sub.id}`)} title="Cancel"><I.X /></button>
+                        </>
+                      ) : (
+                        <>
+                          <h3 className="sub-title" style={{ margin: 0 }}>{sub.title}</h3>
+                          <button
+                            className="btn btn-ghost btn-icon btn-xs sub-pencil"
+                            title="Rename subsection"
+                            onClick={() => startTitleEdit(`ss-${sub.id}`, sub.title)}
+                            style={{ width: 24, height: 24, flexShrink: 0 }}>
+                            <I.Pencil />
+                          </button>
+                        </>
+                      )}
+                    </div>
                     {sub.resources.length > 0 ? (
-                      <span style={{ fontSize: 11, color: "var(--text-muted)", fontWeight: 600 }}>
+                      <span style={{ fontSize: 11, color: "var(--text-muted)", fontWeight: 600, flexShrink: 0 }}>
                         {sub.resources.length} resource{sub.resources.length !== 1 ? "s" : ""}
                       </span>
                     ) : (

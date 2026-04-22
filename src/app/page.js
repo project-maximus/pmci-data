@@ -64,18 +64,18 @@ export default function Home() {
         <div className="login-hero-content">
           <div className="login-hero-badge">
             <span className="dot" />
-            Content Management Platform
+            Training Content Platform
           </div>
           <h2>
-            Build your CDRE
+            Build your PMCI
             <br />
-            prep library with
+            training library
             <br />
-            your team.
+            with your team.
           </h2>
           <p>
-            Organize study materials, track submissions, and collaborate
-            on exam preparation content — all in one place.
+            Organize healthcare training materials, track submissions, and collaborate
+            on program content — all in one place.
           </p>
 
           <div style={{ marginTop: 40, display: "flex", gap: 32 }}>
@@ -84,7 +84,7 @@ export default function Home() {
               <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>Sections</div>
             </div>
             <div>
-              <div style={{ fontSize: 28, fontWeight: 700, color: "white", letterSpacing: "-0.03em" }}>80+</div>
+              <div style={{ fontSize: 28, fontWeight: 700, color: "white", letterSpacing: "-0.03em" }}>75+</div>
               <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>Topics</div>
             </div>
             <div>
@@ -104,7 +104,7 @@ export default function Home() {
 
           <h1 className="login-title">Welcome back</h1>
           <p className="login-subtitle">
-            Sign in to manage your CDRE prep content.
+            Sign in to manage your PMCI training content.
           </p>
 
           <form onSubmit={handleSubmit} className="login-form">

@@ -201,7 +201,7 @@ function AdminInner({ username, role }) {
             </svg>
           </div>
           <div className="sb-brand-text">
-            <h1>NutriPath</h1>
+            <h1>PMCI</h1>
             <p>Admin</p>
           </div>
         </div>
