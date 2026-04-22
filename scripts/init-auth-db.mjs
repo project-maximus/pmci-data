@@ -51,9 +51,7 @@ async function main() {
   const users = [
     { username: "admin", password: "A9v!Q2m#L8r@Z5xT", role: "admin" },
     { username: "developer", password: "D4k$N7p!R2t@W9yF", role: "developer" },
-    { username: "sylvia", password: "S7!mK2@vQ9#tL4xN", role: "teacher" },
-    { username: "kristine", password: "K5@rP8!zM3#nT6wQ", role: "teacher" },
-    { username: "berin", password: "B8#uL3@qV6!sN2xR", role: "teacher" },
+    { username: "maggie@pmci.com", password: "Maggie2025!", role: "teacher" },
   ];
 
   for (const entry of users) {
@@ -73,11 +71,11 @@ async function main() {
   /* Remove old users that are no longer needed */
   await sql`
     DELETE FROM auth_users
-    WHERE username NOT IN ('admin', 'developer', 'sylvia', 'kristine', 'berin')
+    WHERE username NOT IN ('admin', 'developer', 'maggie@pmci.com')
   `;
 
   console.log("auth_users table is ready with roles.");
-  console.log("Users updated: admin (admin), developer (developer), sylvia (teacher), kristine (teacher), berin (teacher)");
+  console.log("Users updated: admin (admin), developer (developer), maggie@pmci.com (teacher)");
 }
 
 main().catch((error) => {
